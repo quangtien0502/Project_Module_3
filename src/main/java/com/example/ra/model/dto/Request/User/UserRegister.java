@@ -1,4 +1,4 @@
-package com.example.ra.model.dto.Request;
+package com.example.ra.model.dto.Request.User;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;

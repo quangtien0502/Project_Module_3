@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("v1/admin/product")
+@RequestMapping("/v1/admin/product")
 public class ProductController {
     @Autowired
     private IProductService productService;

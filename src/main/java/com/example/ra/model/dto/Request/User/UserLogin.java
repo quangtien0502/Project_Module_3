@@ -1,4 +1,4 @@
-package com.example.ra.model.dto.Request;
+package com.example.ra.model.dto.Request.User;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;

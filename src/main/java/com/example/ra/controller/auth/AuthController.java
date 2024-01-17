@@ -1,9 +1,8 @@
 package com.example.ra.controller.auth;
 
 import com.example.ra.Service.IUserService;
-import com.example.ra.model.dto.Request.UserLogin;
-import com.example.ra.model.dto.Request.UserRegister;
-import com.example.ra.model.dto.Response.JwtResponse;
+import com.example.ra.model.dto.Request.User.UserLogin;
+import com.example.ra.model.dto.Request.User.UserRegister;
 import com.example.ra.model.dto.Response.UserResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

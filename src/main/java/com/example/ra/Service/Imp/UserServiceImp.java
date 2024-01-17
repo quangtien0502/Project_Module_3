@@ -2,9 +2,8 @@ package com.example.ra.Service.Imp;
 
 import com.example.ra.Service.IRoleService;
 import com.example.ra.Service.IUserService;
-import com.example.ra.model.dto.Request.UserLogin;
-import com.example.ra.model.dto.Request.UserRegister;
-import com.example.ra.model.dto.Response.JwtResponse;
+import com.example.ra.model.dto.Request.User.UserLogin;
+import com.example.ra.model.dto.Request.User.UserRegister;
 import com.example.ra.model.dto.Response.UserResponse;
 import com.example.ra.model.entity.Role;
 import com.example.ra.model.entity.User;
