@@ -1,0 +1,31 @@
+package com.example.ra.model.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+//Todo: Don't have this order detail Id ?
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+@Entity
+public class OrderDetail {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    //Todo: Foreign Key at Order
+    private Orders orders;
+    //Todo: Foreign Key at Product(Done)
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+    private String name;
+    private Double unitPrice;
+    private Integer orderQuantity;
+}
