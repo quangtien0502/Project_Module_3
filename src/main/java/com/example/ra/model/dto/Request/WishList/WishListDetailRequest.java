@@ -15,15 +15,12 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
-public class WishListRequest {
-    @NotEmpty(message = "Id is empty")
-    @NotBlank(message = "Id is blank")
-    @Pattern(regexp = "\\d+", message = "ID must be a numeric value")
+public class WishListDetailRequest {
     private Integer id;
     @NotNull(message = "userId is null")
     @NotBlank(message = "userId is blank")
-    private Long userId;
+    private Integer wishListId;
     @NotNull(message = "productId is null")
     @NotBlank(message = "productId is blank")
-    private List<Long> listProductId;
+    private Long productId;
 }

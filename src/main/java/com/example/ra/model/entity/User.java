@@ -40,11 +40,11 @@ public class User {
     @JsonIgnore
     private List<Orders> listOrders;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<ShoppingCart> listShoppingCart;
+    private ShoppingCart shoppingCart;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<WishList> listWishList;
+    private WishList wishList;
 }

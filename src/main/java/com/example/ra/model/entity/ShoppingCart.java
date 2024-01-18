@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -19,18 +20,12 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    //Todo: Foreign Key Product Id(done)
-    @ManyToMany
-    @JoinTable(
-            name = "shopping_cart_product",
-            joinColumns = @JoinColumn(name = "shopping_cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
+    //Todo: Foreign Key Shopping Cart Detail
+    @OneToMany(mappedBy = "shoppingCart")
     @JsonIgnore
-    private Set<Product> products = new HashSet<>();
+    private List<ShoppingCartDetail> shoppingCartDetails;
     //Todo: Foreign Key User Id(done)
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-    private Integer orderQuantity;
 }

@@ -38,13 +38,13 @@ public class Product {
     @JsonIgnore
     private List<OrderDetail> listOrderDetail;
 
-    @ManyToMany(mappedBy = "products")
+    @OneToMany(mappedBy = "product")
     @JsonIgnore
-    private Set<ShoppingCart> shoppingCarts = new HashSet<>();
+    private List<ShoppingCartDetail> shoppingCartDetails;
 
 
     //Todo: Change to Many To Many
     @OneToMany(mappedBy = "product")
     @JsonIgnore
-    private List<WishList> listWishList;
+    private List<WishListDetail> listWishListDetail;
 }

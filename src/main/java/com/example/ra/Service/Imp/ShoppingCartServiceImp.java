@@ -4,8 +4,10 @@ import com.example.ra.Service.IShoppingCartService;
 import com.example.ra.model.dto.Request.ShoppingCart.ShoppingCartRequest;
 import com.example.ra.model.entity.Product;
 import com.example.ra.model.entity.ShoppingCart;
+import com.example.ra.model.entity.ShoppingCartDetail;
 import com.example.ra.model.entity.User;
 import com.example.ra.repository.ProductRepository;
+import com.example.ra.repository.ShoppingCartDetailRepository;
 import com.example.ra.repository.ShoppingCartRepository;
 import com.example.ra.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
 
     @Autowired
     private ProductRepository productRepository;
+    
+    @Autowired
+    private ShoppingCartDetailRepository shoppingCartDetailRepository;
 
 
 
@@ -48,9 +53,7 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
         }
         return shoppingCartRepository.save(ShoppingCart.builder()
                 .user(userExist)
-                .products(listProduct)
                 .id(shoppingCartRequest.getId())
-                .orderQuantity(shoppingCartRequest.getOrderQuantity())
                 .build());
     }
 
@@ -65,11 +68,10 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
     @Override
     public void deleteProductInShoppingCart(Long userId, Long productId) {
         ShoppingCart shoppingCart=shoppingCartRepository.findByUser(userId);
-        for (Product product :
-                shoppingCart.getProducts()) {
-            if(product.getId().equals(productId)){
-
-            }
+        List<ShoppingCartDetail> shoppingCartDetailList=shoppingCart.getShoppingCartDetails();
+        for (ShoppingCartDetail shoppingCartDetail:
+                shoppingCartDetailList) {
+            shoppingCartDetailRepository.deleteShoppingCartDetailByShoppingCartAndProduct(shoppingCartDetail.getShoppingCart().getId(),shoppingCartDetail.getProduct().getId());
         }
     }
 

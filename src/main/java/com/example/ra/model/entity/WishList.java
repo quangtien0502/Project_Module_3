@@ -1,10 +1,13 @@
 package com.example.ra.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,11 +19,11 @@ public class WishList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     //Todo: foreign Key: User Id(done)
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
     //Todo: foreign Key: Product Id(done)
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @OneToMany(mappedBy = "wishList")
+    @JsonIgnore
+    private List<WishListDetail> wishListDetails;
 }
