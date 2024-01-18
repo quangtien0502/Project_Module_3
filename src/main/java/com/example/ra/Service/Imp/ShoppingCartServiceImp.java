@@ -67,11 +67,11 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
 
     @Override
     public void deleteProductInShoppingCart(Long userId, Long productId) {
-        ShoppingCart shoppingCart=shoppingCartRepository.findByUser(userId);
+        ShoppingCart shoppingCart=shoppingCartRepository.findByUser(userRepository.findById(userId).orElseThrow(()->new RuntimeException("No User Found")));
         List<ShoppingCartDetail> shoppingCartDetailList=shoppingCart.getShoppingCartDetails();
         for (ShoppingCartDetail shoppingCartDetail:
                 shoppingCartDetailList) {
-            shoppingCartDetailRepository.deleteShoppingCartDetailByShoppingCartAndProduct(shoppingCartDetail.getShoppingCart().getId(),shoppingCartDetail.getProduct().getId());
+            shoppingCartDetailRepository.deleteShoppingCartDetailByShoppingCartAndProduct(shoppingCartDetail.getShoppingCart(),shoppingCartDetail.getProduct());
         }
     }
 

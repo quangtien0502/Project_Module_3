@@ -29,8 +29,6 @@ public class WishListServiceImp implements IWishListService {
     @Autowired
     private WishListDetailRepository wishListDetailRepository;
 
-    @Autowired
-    WishListDetailRequestRepository wishListDetailRequestRepository;
 
     @Override
     public Page<WishList> getAll(Pageable pageable) {
@@ -54,7 +52,7 @@ public class WishListServiceImp implements IWishListService {
             //Insert Or Update Wish List Detail based on the request
             for (Product product :
                     listProductExist) {
-                WishListDetail wishListDetail = wishListDetailRepository.findWishListDetailByWishListAndProduct(wishListFinal.getId(), product.getId()).orElse(null);
+                WishListDetail wishListDetail = wishListDetailRepository.findWishListDetailByWishListAndProduct(wishListFinal, product).orElse(null);
                 if(wishListDetail==null) {
                     // Doesn't exist wish list detail so we should insert
                     WishListDetail wishListDetailNew = WishListDetail.builder().wishList(wishlistCurrent).product(product).build();
@@ -71,7 +69,7 @@ public class WishListServiceImp implements IWishListService {
             //Insert Or Update Wish List Detail based on the request
             for (Product product :
                     listProductExist) {
-                WishListDetail wishListDetail = wishListDetailRepository.findWishListDetailByWishListAndProduct(wishListFinal.getId(), product.getId()).orElse(null);
+                WishListDetail wishListDetail = wishListDetailRepository.findWishListDetailByWishListAndProduct(wishListFinal, product).orElse(null);
                 if(wishListDetail==null) {
                     // Doesn't exist wish list detail so we should insert
                     WishListDetail wishListDetailNew = WishListDetail.builder().wishList(wishlistCurrent).product(product).build();
