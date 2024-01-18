@@ -1,5 +1,7 @@
 package com.example.ra.repository;
 
+import com.example.ra.model.entity.Product;
+import com.example.ra.model.entity.WishList;
 import com.example.ra.model.entity.WishListDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 
