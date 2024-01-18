@@ -1,6 +1,7 @@
 package com.example.ra.controller.admin;
 
 import com.example.ra.Service.ICategoryService;
+import com.example.ra.model.dto.Request.Category.CategoryRequest;
 import com.example.ra.model.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -31,7 +32,7 @@ public class CategoryController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody Category category){
-        return new ResponseEntity<>(categoryService.save(category),HttpStatus.CREATED);
+    public ResponseEntity<?> create(@RequestBody CategoryRequest categoryRequest){
+        return new ResponseEntity<>(categoryService.save(categoryRequest),HttpStatus.CREATED);
     }
 }

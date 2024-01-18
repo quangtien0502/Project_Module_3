@@ -7,7 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,10 +38,12 @@ public class Product {
     @JsonIgnore
     private List<OrderDetail> listOrderDetail;
 
-    @OneToMany(mappedBy = "product")
+    @ManyToMany(mappedBy = "products")
     @JsonIgnore
-    private List<ShoppingCart> listShoppingCart;
+    private Set<ShoppingCart> shoppingCarts = new HashSet<>();
 
+
+    //Todo: Change to Many To Many
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     private List<WishList> listWishList;

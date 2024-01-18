@@ -1,5 +1,6 @@
-package com.example.ra.model.dto.Request.ShoppingCart;
+package com.example.ra.model.dto.Request.Product;
 
+import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -9,24 +10,24 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class ShoppingCartRequest {
+public class ProductRequest {
     @NotEmpty(message = "Id is empty")
     @NotBlank(message = "Id is blank")
     @Pattern(regexp = "\\d+", message = "ID must be a numeric value")
-    private Integer id;
-    @NotNull(message = "userId is null")
-    @NotBlank(message = "userId is blank")
-    private Long userId;
-    @NotNull(message = "productId is null")
-    @NotBlank(message = "productId is blank")
-    private Set<Long> productId;
-    @NotNull(message = "quantity is null")
-    @NotBlank(message = "quantity is blank")
-    private Integer orderQuantity;
+    private Long id;
+    private String productName;
+    private String description;
+    private Double unitPrice;
+    private Integer stockQuantity;
+    private String image;
+    private Date createdAt;
+    private Date updatedAt;
+
+
 }

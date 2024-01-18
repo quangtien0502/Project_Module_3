@@ -1,4 +1,4 @@
-package com.example.ra.model.dto.Request.ShoppingCart;
+package com.example.ra.model.dto.Request.WishList;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -9,13 +9,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class ShoppingCartRequest {
+public class WishListRequest {
     @NotEmpty(message = "Id is empty")
     @NotBlank(message = "Id is blank")
     @Pattern(regexp = "\\d+", message = "ID must be a numeric value")
@@ -25,8 +23,5 @@ public class ShoppingCartRequest {
     private Long userId;
     @NotNull(message = "productId is null")
     @NotBlank(message = "productId is blank")
-    private Set<Long> productId;
-    @NotNull(message = "quantity is null")
-    @NotBlank(message = "quantity is blank")
-    private Integer orderQuantity;
+    private Long productId;
 }

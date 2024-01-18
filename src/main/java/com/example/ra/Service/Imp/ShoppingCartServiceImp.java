@@ -13,7 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ShoppingCartServiceImp implements IShoppingCartService {
@@ -26,6 +29,8 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
     @Autowired
     private ProductRepository productRepository;
 
+
+
     @Override
     public Page<ShoppingCart> getAll(Pageable pageable) {
         return null;
@@ -33,25 +38,40 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
 
     @Override
     public ShoppingCart save(ShoppingCartRequest shoppingCartRequest) {
-        ShoppingCart shoppingCart=new ShoppingCart();
-        User userExist=userRepository.findById(shoppingCartRequest.getUserId()).orElseThrow(()->new RuntimeException("User doesn't exist"));
-        Product productExist=productRepository.findById(shoppingCartRequest.getProductId()).orElseThrow(()->new RuntimeException("Product doesn't exist"));
-        shoppingCart.setUser(userExist);
-        shoppingCart.setProduct(productExist);
-        if(shoppingCartRequest.getId() !=null){
-            shoppingCart.setId(shoppingCartRequest.getId());
+
+        User userExist = userRepository.findById(shoppingCartRequest.getUserId()).orElseThrow(() -> new RuntimeException("User doesn't exist"));
+        Set<Product> listProduct=new HashSet<>();
+        for (Long productId :
+                shoppingCartRequest.getProductId()) {
+            Product productExist=productRepository.findById(productId).orElseThrow(()->new RuntimeException("Product Not Found"));
+            listProduct.add(productExist);
         }
-        shoppingCart.setOrderQuantity(shoppingCartRequest.getOrderQuantity());
-        return shoppingCartRepository.save(shoppingCart);
+        return shoppingCartRepository.save(ShoppingCart.builder()
+                .user(userExist)
+                .products(listProduct)
+                .id(shoppingCartRequest.getId())
+                .orderQuantity(shoppingCartRequest.getOrderQuantity())
+                .build());
     }
 
     @Override
-    public ShoppingCart findById(Long id) {
-        return null;
+    public ShoppingCart findById(Integer id) {
+        return shoppingCartRepository.findById(id).orElseThrow(()->new RuntimeException("No Shopping Cart found"));
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Integer id) {}
 
+    @Override
+    public void deleteProductInShoppingCart(Long userId, Long productId) {
+        ShoppingCart shoppingCart=shoppingCartRepository.findByUser(userId);
+        for (Product product :
+                shoppingCart.getProducts()) {
+            if(product.getId().equals(productId)){
+
+            }
+        }
     }
+
+
 }

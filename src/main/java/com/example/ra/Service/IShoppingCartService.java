@@ -9,6 +9,8 @@ public interface IShoppingCartService {
     Page<ShoppingCart> getAll(Pageable pageable);
     ShoppingCart save(ShoppingCartRequest shoppingCartRequest);
 
-    ShoppingCart findById(Long id);
-    void deleteById(Long id);
+    ShoppingCart findById(Integer id);
+    void deleteById(Integer id);
+
+    void deleteProductInShoppingCart(Long userId,Long productId);
 }
