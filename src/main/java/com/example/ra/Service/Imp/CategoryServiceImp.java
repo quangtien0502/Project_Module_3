@@ -1,5 +1,6 @@
 package com.example.ra.Service.Imp;
 
+import com.example.ra.CustomException;
 import com.example.ra.Service.ICategoryService;
 import com.example.ra.model.dto.Request.Category.CategoryRequest;
 import com.example.ra.model.entity.Category;
@@ -24,14 +25,16 @@ public class CategoryServiceImp implements ICategoryService {
     }
 
     @Override
-    public Category save(CategoryRequest categoryRequest) {
-        Category category=Category.builder()
-                .id(categoryRequest.getId())
-                .categoryName(categoryRequest.getCategoryName())
-                .description(categoryRequest.getDescription())
-                .status(categoryRequest.getStatus())
-                .build();
-        return categoryRepository.save(category);
+    public Boolean checkDuplicateName(String name) {
+        return categoryRepository.existsCategoryByCategoryName(name);
+    }
+
+    @Override
+    public Category save(Category categoryRequest) throws CustomException {
+        if(categoryRequest.getId()==null && checkDuplicateName(categoryRequest.getCategoryName())){
+            throw new CustomException("Category Name already Exist");
+        }
+        return categoryRepository.save(categoryRequest);
     }
 
     @Override
@@ -40,8 +43,10 @@ public class CategoryServiceImp implements ICategoryService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        categoryRepository.deleteById(id);
+    public void deleteById(Long id) throws CustomException {
+        Category category=findById(id);
+        category.setStatus(!category.getStatus());
+        save(category);
     }
 
 

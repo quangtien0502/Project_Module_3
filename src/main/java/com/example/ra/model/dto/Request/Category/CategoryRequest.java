@@ -14,10 +14,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class CategoryRequest {
-    @NotEmpty(message = "Id is empty")
-    @NotBlank(message = "Id is blank")
-    @Pattern(regexp = "\\d+", message = "ID must be a numeric value")
-    private Long id;
     @Column(nullable = false,unique = true)
     private String categoryName;
     private String description;

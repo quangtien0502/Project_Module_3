@@ -23,21 +23,13 @@ public class ProductServiceImp implements IProductService {
     }
 
     @Override
-    public Product save(ProductRequest productRequest) {
-        Product product= Product.builder()
-                .id(productRequest.getId())
-                .productName(productRequest.getProductName())
-                .description(productRequest.getDescription())
-                .unitPrice(productRequest.getUnitPrice())
-                .stockQuantity(productRequest.getStockQuantity())
-                .image(productRequest.getImage())
-                .build();
+    public Product save(Product productRequest) {
         if (productRequest.getId() !=null){
-            product.setUpdatedAt(new Date());
+            productRequest.setUpdatedAt(new Date());
         }else {
-            product.setCreatedAt(new Date());
+            productRequest.setCreatedAt(new Date());
         }
-        return productRepository.save(product);
+        return productRepository.save(productRequest);
     }
 
     @Override
@@ -47,6 +39,8 @@ public class ProductServiceImp implements IProductService {
 
     @Override
     public void deleteById(Long id) {
-        productRepository.deleteById(id);
+        Product product=findById(id);
+        product.setStatus(!product.getStatus());
+        save(product);
     }
 }

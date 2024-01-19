@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CategoryRepository extends JpaRepository<Category,Long> {
     Page<Category> findCategoriesByStatus(Boolean status, Pageable pageable);
+
+    Boolean existsCategoryByCategoryName(String name);
 }

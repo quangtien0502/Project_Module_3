@@ -15,6 +15,8 @@ import com.example.ra.repository.UserRepository;
 import com.example.ra.security.jwt.JwtProvider;
 import com.example.ra.security.user_principle.UserPrinciple;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -82,10 +84,15 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public UserResponse updateUser(UserUpdateRequest userUpdateRequest) {
+    public User findUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(()->new RuntimeException("No User Found"));
+    }
+
+    @Override
+    public UserResponse updateUser(User userUpdate) {
         User user=commonService.findUserIdInContext();
-        user.setFullName(userUpdateRequest.getFullName());
-        user.setUserName(userUpdateRequest.getUserName());
+        user.setFullName(userUpdate.getFullName());
+        user.setUserName(userUpdate.getUserName());
         userRepository.save(user);
         return UserResponse.builder()
                 .id(user.getId())
@@ -101,6 +108,26 @@ public class UserServiceImp implements IUserService {
         //Use password encoder to compare password
         return null;
     }
+
+    @Override
+    public Page<User> getAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<User> findUserByFullName(String keyword) {
+        return userRepository.findAllByFullNameContaining(keyword);
+    }
+
+    @Override
+    public String changeUserStatus(Long userId) {
+        User user=findUserById(userId);
+        user.setStatus(!user.getStatus());
+        updateUser(user);
+        return "Success";
+    }
+
+
 
 
 }

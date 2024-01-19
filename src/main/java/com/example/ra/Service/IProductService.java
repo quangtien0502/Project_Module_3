@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IProductService {
     Page<Product> getAll(Pageable pageable);
-    Product save(ProductRequest productRequest);
+    Product save(Product productRequest);
     Product findById(Long id);
     void deleteById(Long id);
 }

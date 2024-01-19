@@ -6,6 +6,8 @@ import com.example.ra.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoleServiceImp implements IRoleService {
     @Autowired
@@ -13,6 +15,11 @@ public class RoleServiceImp implements IRoleService {
     @Override
     public Role findByRoleName(String roleName) {
         return roleRepository.findByName(roleName).orElseThrow(()->new RuntimeException("Role Not Found"));
+    }
+
+    @Override
+    public List<Role> findAll() {
+        return roleRepository.findAll();
     }
 
 
