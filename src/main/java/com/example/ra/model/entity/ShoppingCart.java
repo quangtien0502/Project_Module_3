@@ -2,6 +2,9 @@ package com.example.ra.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,11 +24,18 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     //Todo: Foreign Key Shopping Cart Detail
-    @OneToMany(mappedBy = "shoppingCart")
-    @JsonIgnore
-    private List<ShoppingCartDetail> shoppingCartDetails;
     //Todo: Foreign Key User Id(done)
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+
+    @NotEmpty(message = "quantity is empty")
+    @NotBlank(message = "quantity is blank")
+    @Pattern(regexp = "\\d+", message = "quantity must be a numeric value")
+    private Integer quantity;
 }

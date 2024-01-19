@@ -19,11 +19,11 @@ public class WishList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     //Todo: foreign Key: User Id(done)
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     //Todo: foreign Key: Product Id(done)
-    @OneToMany(mappedBy = "wishList")
-    @JsonIgnore
-    private List<WishListDetail> wishListDetails;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

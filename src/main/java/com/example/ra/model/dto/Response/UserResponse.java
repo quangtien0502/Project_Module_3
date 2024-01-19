@@ -1,5 +1,6 @@
 package com.example.ra.model.dto.Response;
 
+import com.example.ra.model.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

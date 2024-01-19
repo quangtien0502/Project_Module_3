@@ -1,10 +1,14 @@
 package com.example.ra.Service.Imp;
 
+import com.example.ra.Service.CommonService;
 import com.example.ra.Service.IRoleService;
 import com.example.ra.Service.IUserService;
+import com.example.ra.model.dto.Request.User.UpdatePassWord;
 import com.example.ra.model.dto.Request.User.UserLogin;
 import com.example.ra.model.dto.Request.User.UserRegister;
+import com.example.ra.model.dto.Request.User.UserUpdateRequest;
 import com.example.ra.model.dto.Response.UserResponse;
+import com.example.ra.model.entity.Address;
 import com.example.ra.model.entity.Role;
 import com.example.ra.model.entity.User;
 import com.example.ra.repository.UserRepository;
@@ -19,7 +23,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,6 +45,10 @@ public class UserServiceImp implements IUserService {
 
     @Autowired
     private JwtProvider jwtProvider;
+
+    @Autowired
+    private CommonService commonService;
+
     @Override
     public UserResponse handleLogin(UserLogin userLogin) {
         Authentication authentication;
@@ -70,4 +80,27 @@ public class UserServiceImp implements IUserService {
         userRepository.save(user);
         return "Success";
     }
+
+    @Override
+    public UserResponse updateUser(UserUpdateRequest userUpdateRequest) {
+        User user=commonService.findUserIdInContext();
+        user.setFullName(userUpdateRequest.getFullName());
+        user.setUserName(userUpdateRequest.getUserName());
+        userRepository.save(user);
+        return UserResponse.builder()
+                .id(user.getId())
+                .status(user.getStatus())
+                .userName(user.getUserName())
+                .roles(user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()))
+                .fullName(user.getFullName())
+                .build();
+    }
+
+    @Override
+    public String updatePassword(UpdatePassWord updatePassWord) {
+        //Use password encoder to compare password
+        return null;
+    }
+
+
 }

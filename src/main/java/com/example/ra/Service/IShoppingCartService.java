@@ -7,10 +7,11 @@ import org.springframework.data.domain.Pageable;
 
 public interface IShoppingCartService {
     Page<ShoppingCart> getAll(Pageable pageable);
-    ShoppingCart save(ShoppingCartRequest shoppingCartRequest);
+    ShoppingCart save(ShoppingCart shoppingCart);
 
     ShoppingCart findById(Integer id);
-    void deleteById(Integer id);
+    void deleteOneProductById(Integer id);
 
-    void deleteProductInShoppingCart(Long userId,Long productId);
+    void deleteAllProductInShoppingCartOfUser();
+
 }

@@ -16,17 +16,11 @@ import java.util.Set;
 @Builder
 @Data
 public class ShoppingCartRequest {
-    @NotEmpty(message = "Id is empty")
-    @NotBlank(message = "Id is blank")
-    @Pattern(regexp = "\\d+", message = "ID must be a numeric value")
-    private Integer id;
-    @NotNull(message = "userId is null")
-    @NotBlank(message = "userId is blank")
-    private Long userId;
     @NotNull(message = "productId is null")
     @NotBlank(message = "productId is blank")
-    private Set<Long> productId;
-    @NotNull(message = "quantity is null")
+    private Long productId;
+    @NotEmpty(message = "quantity is empty")
     @NotBlank(message = "quantity is blank")
+    @Pattern(regexp = "\\d+", message = "quantity must be a numeric value")
     private Integer orderQuantity;
 }

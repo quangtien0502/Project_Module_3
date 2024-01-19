@@ -1,13 +1,12 @@
 package com.example.ra.Service.Imp;
 
+import com.example.ra.Service.CommonService;
 import com.example.ra.Service.IShoppingCartService;
 import com.example.ra.model.dto.Request.ShoppingCart.ShoppingCartRequest;
 import com.example.ra.model.entity.Product;
 import com.example.ra.model.entity.ShoppingCart;
-import com.example.ra.model.entity.ShoppingCartDetail;
 import com.example.ra.model.entity.User;
 import com.example.ra.repository.ProductRepository;
-import com.example.ra.repository.ShoppingCartDetailRepository;
 import com.example.ra.repository.ShoppingCartRepository;
 import com.example.ra.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -30,10 +28,9 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
 
     @Autowired
     private ProductRepository productRepository;
-    
-    @Autowired
-    private ShoppingCartDetailRepository shoppingCartDetailRepository;
 
+    @Autowired
+    private CommonService commonService;
 
 
     @Override
@@ -42,38 +39,32 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
     }
 
     @Override
-    public ShoppingCart save(ShoppingCartRequest shoppingCartRequest) {
-
-        User userExist = userRepository.findById(shoppingCartRequest.getUserId()).orElseThrow(() -> new RuntimeException("User doesn't exist"));
-        Set<Product> listProduct=new HashSet<>();
-        for (Long productId :
-                shoppingCartRequest.getProductId()) {
-            Product productExist=productRepository.findById(productId).orElseThrow(()->new RuntimeException("Product Not Found"));
-            listProduct.add(productExist);
-        }
-        return shoppingCartRepository.save(ShoppingCart.builder()
+    public ShoppingCart save(ShoppingCart shoppingCart) {
+        User userExist = commonService.findUserIdInContext();
+        Product product = shoppingCart.getProduct();
+        ShoppingCart shoppingCartFinal=ShoppingCart.builder()
                 .user(userExist)
-                .id(shoppingCartRequest.getId())
-                .build());
+                .product(product)
+                .id(shoppingCart.getId())
+                .quantity(shoppingCart.getQuantity())
+                .build();
+        return shoppingCartRepository.save(shoppingCartFinal);
     }
 
     @Override
     public ShoppingCart findById(Integer id) {
-        return shoppingCartRepository.findById(id).orElseThrow(()->new RuntimeException("No Shopping Cart found"));
-    }
-
-    @Override
-    public void deleteById(Integer id) {}
-
-    @Override
-    public void deleteProductInShoppingCart(Long userId, Long productId) {
-        ShoppingCart shoppingCart=shoppingCartRepository.findByUser(userRepository.findById(userId).orElseThrow(()->new RuntimeException("No User Found")));
-        List<ShoppingCartDetail> shoppingCartDetailList=shoppingCart.getShoppingCartDetails();
-        for (ShoppingCartDetail shoppingCartDetail:
-                shoppingCartDetailList) {
-            shoppingCartDetailRepository.deleteShoppingCartDetailByShoppingCartAndProduct(shoppingCartDetail.getShoppingCart(),shoppingCartDetail.getProduct());
-        }
+        return shoppingCartRepository.findById(id).orElseThrow(() -> new RuntimeException("No Shopping Cart found"));
     }
 
 
+    @Override
+    public void deleteOneProductById(Integer shoppingCartId) {
+        shoppingCartRepository.deleteById(shoppingCartId);
+    }
+
+    @Override
+    public void deleteAllProductInShoppingCartOfUser() {
+        User user=commonService.findUserIdInContext();
+        shoppingCartRepository.deleteAllByUser(user);
+    }
 }

@@ -40,11 +40,11 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     @JsonIgnore
-    private List<ShoppingCartDetail> shoppingCartDetails;
+    private List<ShoppingCart> listShoppingCart;
 
 
     //Todo: Change to Many To Many
     @OneToMany(mappedBy = "product")
     @JsonIgnore
-    private List<WishListDetail> listWishListDetail;
+    private List<WishList> listWishList;
 }
