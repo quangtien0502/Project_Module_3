@@ -1,5 +1,6 @@
 package com.example.ra.model.dto.Response;
 
+import com.example.ra.model.entity.OrderDetail;
 import com.example.ra.model.enums.ProductStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,5 +26,6 @@ public class OrderResponse {
     private String receivePhone;
     private Date createdAt;
     private Date receivedAt;
+    private List<OrderDetailResponse> orderDetailList;
 
 }

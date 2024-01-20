@@ -1,57 +1,55 @@
 package com.example.ra.Service.Imp;
-
+import com.example.ra.CustomException;
 import com.example.ra.Service.CommonService;
 import com.example.ra.Service.IShoppingCartService;
 import com.example.ra.Service.IUserService;
-import com.example.ra.model.dto.Request.ShoppingCart.ShoppingCartRequest;
-import com.example.ra.model.entity.Product;
-import com.example.ra.model.entity.ShoppingCart;
-import com.example.ra.model.entity.User;
-import com.example.ra.repository.ProductRepository;
+import com.example.ra.model.entity.*;
+import com.example.ra.model.enums.ProductStatus;
+import com.example.ra.repository.OrderDetailRepository;
+import com.example.ra.repository.OrderRepository;
 import com.example.ra.repository.ShoppingCartRepository;
-import com.example.ra.repository.UserRepository;
-import com.example.ra.security.user_principle.UserPrinciple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ShoppingCartServiceImp implements IShoppingCartService {
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
-
     @Autowired
     private IUserService userService;
-
-    @Autowired
-    private ProductRepository productRepository;
-
     @Autowired
     private CommonService commonService;
 
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
+
+    @Autowired
+    private OrderServiceImp orderServiceImp;
 
     @Override
-    public Page<ShoppingCart> getAll(Pageable pageable) {
+    public List<ShoppingCart> getAll() {
         User user =userService.findUserById(commonService.findUserIdInContext().getId());
-        return shoppingCartRepository.findByUser(user,pageable);
+        return shoppingCartRepository.findByUser(user);
     }
 
     @Override
-    public ShoppingCart save(ShoppingCart shoppingCart) {
+    public ShoppingCart save(ShoppingCart shoppingCart) throws CustomException {
         User userExist = userService.findUserById(commonService.findUserIdInContext().getId());
         Product product = shoppingCart.getProduct();
-        ShoppingCart shoppingCartFinal=ShoppingCart.builder()
-                .user(userExist)
-                .product(product)
-                .id(shoppingCart.getId())
-                .quantity(shoppingCart.getQuantity())
-                .build();
+        ShoppingCart shoppingCartFinal=new ShoppingCart(shoppingCart.getId(),userExist,product,shoppingCart.getQuantity());
+        if(shoppingCart.getId()==null && shoppingCartRepository.existsByUserAndProduct(userExist,product)){
+            //this is inserted
+            throw new CustomException("This user already has this product in shopping cart");
+        }
         return shoppingCartRepository.save(shoppingCartFinal);
     }
 
@@ -70,5 +68,36 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
     public void deleteAllProductInShoppingCartOfUser() {
         User user=userService.findUserById(commonService.findUserIdInContext().getId());
         shoppingCartRepository.deleteAllByUser(user);
+    }
+
+    @Override
+    public Orders checkout(Address address) throws CustomException {
+        User user=userService.findUserById(commonService.findUserIdInContext().getId());
+        //Todo: Create this list order detail => What to pass in the orders of orderDetailList: calculate order quantity,what's unit price and name?
+        List<ShoppingCart> shoppingCartList=shoppingCartRepository.findByUser(user);
+        double totalPrice=0.00;
+        for (ShoppingCart shoppingCart : shoppingCartList) {
+            totalPrice = totalPrice + shoppingCart.getQuantity() * shoppingCart.getProduct().getUnitPrice();
+        }
+        Orders orders=Orders.builder()
+                .createdAt(new Date())
+                .receiveAddress(address.getFullAddress())
+                .receivePhone(address.getPhone())
+                .receiveName(user.getFullName())
+                .status(ProductStatus.CONFIRM)
+                .totalPrice(totalPrice)
+                .user(user)
+                .build();
+        Orders ordersNew=orderRepository.save(orders);
+        List<OrderDetail> orderDetailList=shoppingCartList.stream().map((item)->OrderDetail.builder()
+                .orders(ordersNew)
+                .orderQuantity(item.getQuantity())
+                .unitPrice(item.getProduct().getUnitPrice())
+                .name(item.getProduct().getProductName())
+                .product(item.getProduct())
+                .build()).toList();
+        List<OrderDetail> orderDetailListNew=orderDetailList.stream().map((item)->orderDetailRepository.save(item)).toList();
+
+        return orderServiceImp.findById(ordersNew.getId());
     }
 }

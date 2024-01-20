@@ -6,7 +6,6 @@ import com.example.ra.Service.CommonService;
 import com.example.ra.Service.Imp.OrderServiceImp;
 import com.example.ra.model.dto.Response.OrderDetailResponse;
 import com.example.ra.model.dto.Response.OrderResponse;
-import com.example.ra.model.entity.OrderDetail;
 import com.example.ra.model.entity.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

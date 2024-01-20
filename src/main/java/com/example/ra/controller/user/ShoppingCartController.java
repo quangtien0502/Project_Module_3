@@ -1,5 +1,6 @@
-package com.example.ra.controller.admin;
+package com.example.ra.controller.user;
 
+import com.example.ra.CustomException;
 import com.example.ra.Service.CommonService;
 import com.example.ra.Service.IProductService;
 import com.example.ra.Service.IShoppingCartService;
@@ -35,11 +36,11 @@ public class ShoppingCartController {
                                           @RequestParam(defaultValue = "asc",name = "order") String order
                                           ){
         Pageable pageable=commonService.pagination(order,page,limit,sort);
-        return new ResponseEntity<>(shoppingCartService.getAll(pageable), HttpStatus.OK);
+        return new ResponseEntity<>(shoppingCartService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping("")
-    public ResponseEntity<?> createShoppingCart(@Valid @RequestBody ShoppingCartRequest shoppingCartRequest){
+    public ResponseEntity<?> createShoppingCart(@Valid @RequestBody ShoppingCartRequest shoppingCartRequest) throws CustomException {
         ShoppingCart shoppingCart= ShoppingCart.builder()
                 .quantity(shoppingCartRequest.getOrderQuantity())
                 .product(productService.findById(shoppingCartRequest.getProductId()))

@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart,Integer> {
-    Page<ShoppingCart> findByUser(User user, Pageable pageable);
+    List<ShoppingCart> findByUser(User user);
 
     Boolean existsByUserAndProduct(User user, Product product);
 
