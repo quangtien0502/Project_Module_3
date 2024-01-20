@@ -32,6 +32,8 @@ public class Product {
     private Category category;
     private Date createdAt;
     private Date updatedAt;
+    @Builder.Default
+    private Boolean status=true;
 
     @OneToMany(mappedBy = "product")
     @JsonIgnore
@@ -46,5 +48,5 @@ public class Product {
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     private List<WishList> listWishList;
-    private Boolean status;
+
 }

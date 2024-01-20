@@ -12,7 +12,7 @@ import java.util.List;
 public interface ICategoryService {
     Page<Category> getAll(Pageable pageable);
     Category save(Category category) throws CustomException;
-    Category findById(Long id);
+    Category findById(Long id) throws CustomException;
     void deleteById(Long id) throws CustomException;
 
     Page<Category> getAllEnable(Pageable pageable);

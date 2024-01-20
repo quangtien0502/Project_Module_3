@@ -2,14 +2,18 @@ package com.example.ra;
 
 import com.example.ra.model.dto.Response.OrderDetailResponse;
 import com.example.ra.model.dto.Response.OrderResponse;
+import com.example.ra.model.dto.Response.UserResponse;
 import com.example.ra.model.entity.OrderDetail;
 import com.example.ra.model.entity.Orders;
+import com.example.ra.model.entity.Role;
+import com.example.ra.model.entity.User;
 import com.example.ra.repository.OrderDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class Mapper {
@@ -41,6 +45,10 @@ public class Mapper {
 
     public List<OrderDetailResponse> orderToOrderDetailResponse(Orders orders){
         return orders.getListOrderDetail().stream().map((item)->OrderDetailResponse.builder().id(item.getId()).orderQuantity(item.getOrderQuantity()).name(item.getName()).productName(item.getProduct().getProductName()).unitPrice(item.getUnitPrice()).build()).toList();
+    }
+
+    public UserResponse userToUserResponse(User user){
+        return new UserResponse(user.getId(),null, user.getFullName(), user.getUserName(),user.getStatus(),user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()));
     }
 
 }

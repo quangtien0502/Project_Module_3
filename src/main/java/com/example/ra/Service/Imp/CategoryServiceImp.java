@@ -38,8 +38,8 @@ public class CategoryServiceImp implements ICategoryService {
     }
 
     @Override
-    public Category findById(Long id) {
-        return categoryRepository.findById(id).orElseThrow(()->new RuntimeException("Category Not Found"));
+    public Category findById(Long id) throws CustomException {
+        return categoryRepository.findById(id).orElseThrow(()->new CustomException("Category Not Found"));
     }
 
     @Override

@@ -89,18 +89,9 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public UserResponse updateUser(User userUpdate) {
-        User user=findUserById(commonService.findUserIdInContext().getId());
-        user.setFullName(userUpdate.getFullName());
-        user.setUserName(userUpdate.getUserName());
-        userRepository.save(user);
-        return UserResponse.builder()
-                .id(user.getId())
-                .status(user.getStatus())
-                .userName(user.getUserName())
-                .roles(user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()))
-                .fullName(user.getFullName())
-                .build();
+    public User updateUser(User userUpdate) {
+       return userRepository.save(userUpdate);
+
     }
 
     @Override

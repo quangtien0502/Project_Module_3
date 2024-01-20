@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class AddressRequest {
-    @NotEmpty(message = "Id is empty")
-    @NotBlank(message = "Id is blank")
     @Pattern(regexp = "\\d+", message = "ID must be a numeric value")
     private Long id;
     @NotNull(message = "userId is null")

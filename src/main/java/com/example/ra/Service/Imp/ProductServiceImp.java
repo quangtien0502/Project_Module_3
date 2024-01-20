@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductServiceImp implements IProductService {
@@ -27,6 +28,7 @@ public class ProductServiceImp implements IProductService {
         if (productRequest.getId() !=null){
             productRequest.setUpdatedAt(new Date());
         }else {
+            productRequest.setSku(UUID.randomUUID().toString());
             productRequest.setCreatedAt(new Date());
         }
         return productRepository.save(productRequest);
