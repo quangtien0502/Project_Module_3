@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CategoryResponse {
     private Long id;
+    private String description;
     private String categoryName;
     private Boolean status;
 

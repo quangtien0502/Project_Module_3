@@ -34,7 +34,7 @@ public class ShoppingCartController {
                                           @RequestParam(defaultValue = "0",name = "page") int page,
                                           @RequestParam(defaultValue = "id",name = "sortBy") String sort,
                                           @RequestParam(defaultValue = "asc",name = "order") String order
-                                          ){
+                                          ) throws CustomException {
         Pageable pageable=commonService.pagination(order,page,limit,sort);
         return new ResponseEntity<>(shoppingCartService.getAll(), HttpStatus.OK);
     }

@@ -1,5 +1,6 @@
 package com.example.ra.Service.Imp;
 
+import com.example.ra.CustomException;
 import com.example.ra.Service.CommonService;
 import com.example.ra.Service.IRoleService;
 import com.example.ra.Service.IUserService;
@@ -84,8 +85,8 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public User findUserById(Long userId) {
-        return userRepository.findById(userId).orElseThrow(()->new RuntimeException("No User Found"));
+    public User findUserById(Long userId) throws CustomException {
+        return userRepository.findById(userId).orElseThrow(()->new CustomException("No User Found"));
     }
 
     @Override
@@ -111,7 +112,7 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public String changeUserStatus(Long userId) {
+    public String changeUserStatus(Long userId) throws CustomException {
         User user=findUserById(userId);
         user.setStatus(!user.getStatus());
         updateUser(user);

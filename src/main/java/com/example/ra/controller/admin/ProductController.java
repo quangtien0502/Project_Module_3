@@ -23,6 +23,8 @@ public class ProductController {
     @Autowired
     private ICategoryService categoryService;
 
+
+    //Todo: Should I fix this to get All Enable ?
     @GetMapping("")
     public ResponseEntity<?> getAll(@RequestParam(defaultValue = "5",name = "limit") int limit,
                                     @RequestParam(defaultValue = "0",name = "page") int page,
@@ -48,6 +50,26 @@ public class ProductController {
                 .image(productRequest.getImage())
                 .build();
         return new ResponseEntity<>(productService.save(product),HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{productId}")
+    public ResponseEntity<?> update(@Valid @RequestBody ProductRequest productRequest,@PathVariable Long productId) throws CustomException {
+        Product product=productService.findById(productId);
+        product.setProductName(productRequest.getProductName());
+        product.setCategory(categoryService.findById(productRequest.getCategoryId()));
+        product.setDescription(productRequest.getDescription());
+        product.setUnitPrice(productRequest.getUnitPrice());
+        product.setStockQuantity(product.getStockQuantity());
+        product.setImage(productRequest.getImage());
+        return new ResponseEntity<>(productService.save(product),HttpStatus.OK);
+    }
+
+    @PutMapping("/delete/{productId}")
+    public ResponseEntity<?> deleteById(@PathVariable Long productId){
+        Product product=productService.findById(productId);
+        product.setStatus(false);
+        productService.save(product);
+        return new ResponseEntity<>("Delete Success",HttpStatus.OK);
     }
 
 

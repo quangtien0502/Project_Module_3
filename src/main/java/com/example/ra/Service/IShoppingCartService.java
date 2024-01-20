@@ -13,13 +13,13 @@ import org.springframework.security.core.Authentication;
 import java.util.List;
 
 public interface IShoppingCartService {
-    List<ShoppingCart> getAll();
+    List<ShoppingCart> getAll() throws CustomException;
     ShoppingCart save(ShoppingCart shoppingCart) throws CustomException;
 
     ShoppingCart findById(Integer id);
     void deleteOneProductById(Integer id);
 
-    void deleteAllProductInShoppingCartOfUser();
+    void deleteAllProductInShoppingCartOfUser() throws CustomException;
 
     Orders checkout(Address address) throws CustomException;
 

@@ -1,5 +1,6 @@
 package com.example.ra.controller.admin;
 
+import com.example.ra.CustomException;
 import com.example.ra.Mapper;
 import com.example.ra.Service.CommonService;
 import com.example.ra.Service.Imp.UserServiceImp;
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<?> changeUserStatus(@PathVariable Long userId){
+    public ResponseEntity<?> changeUserStatus(@PathVariable Long userId) throws CustomException {
         String result=userServiceImp.changeUserStatus(userId);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }

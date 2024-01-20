@@ -4,6 +4,7 @@ import com.example.ra.CustomException;
 import com.example.ra.Service.CommonService;
 import com.example.ra.Service.ICategoryService;
 import com.example.ra.model.dto.Request.Category.CategoryRequest;
+import com.example.ra.model.dto.Response.CategoryResponse;
 import com.example.ra.model.entity.Category;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,12 @@ public class CategoryController {
                                     @RequestParam(defaultValue = "asc",name = "order") String order){
         Pageable pageable=commonService.pagination(order,page,limit,sort);
         return new ResponseEntity<>(categoryService.getAllEnable(pageable), HttpStatus.OK);
+    }
+
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<?> findCategoryById(@PathVariable Long categoryId) throws CustomException {
+        Category category=categoryService.findById(categoryId);
+        return new ResponseEntity<>(category,HttpStatus.OK);
     }
 
     @PostMapping("")

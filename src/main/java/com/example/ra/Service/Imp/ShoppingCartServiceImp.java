@@ -36,7 +36,7 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
     private OrderServiceImp orderServiceImp;
 
     @Override
-    public List<ShoppingCart> getAll() {
+    public List<ShoppingCart> getAll() throws CustomException {
         User user =userService.findUserById(commonService.findUserIdInContext().getId());
         return shoppingCartRepository.findByUser(user);
     }
@@ -65,7 +65,7 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
     }
 
     @Override
-    public void deleteAllProductInShoppingCartOfUser() {
+    public void deleteAllProductInShoppingCartOfUser() throws CustomException {
         User user=userService.findUserById(commonService.findUserIdInContext().getId());
         shoppingCartRepository.deleteAllByUser(user);
     }

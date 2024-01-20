@@ -1,5 +1,6 @@
 package com.example.ra.Service;
 
+import com.example.ra.CustomException;
 import com.example.ra.model.dto.Request.User.UpdatePassWord;
 import com.example.ra.model.dto.Request.User.UserLogin;
 import com.example.ra.model.dto.Request.User.UserRegister;
@@ -16,7 +17,7 @@ public interface IUserService {
 
     String handleRegister(UserRegister userRegister);
 
-    User findUserById(Long userId);
+    User findUserById(Long userId) throws CustomException;
 
     User updateUser(User user);
 
@@ -28,5 +29,5 @@ public interface IUserService {
 
 
 
-    String changeUserStatus(Long userId);
+    String changeUserStatus(Long userId) throws CustomException;
 }
