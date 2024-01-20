@@ -90,7 +90,7 @@ public class UserServiceImp implements IUserService {
 
     @Override
     public UserResponse updateUser(User userUpdate) {
-        User user=commonService.findUserIdInContext();
+        User user=findUserById(commonService.findUserIdInContext().getId());
         user.setFullName(userUpdate.getFullName());
         user.setUserName(userUpdate.getUserName());
         userRepository.save(user);

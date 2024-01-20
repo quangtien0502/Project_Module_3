@@ -44,7 +44,7 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
 
     @Override
     public ShoppingCart save(ShoppingCart shoppingCart) {
-        User userExist = commonService.findUserIdInContext();
+        User userExist = userService.findUserById(commonService.findUserIdInContext().getId());
         Product product = shoppingCart.getProduct();
         ShoppingCart shoppingCartFinal=ShoppingCart.builder()
                 .user(userExist)
@@ -68,7 +68,7 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
 
     @Override
     public void deleteAllProductInShoppingCartOfUser() {
-        User user=commonService.findUserIdInContext();
+        User user=userService.findUserById(commonService.findUserIdInContext().getId());
         shoppingCartRepository.deleteAllByUser(user);
     }
 }
