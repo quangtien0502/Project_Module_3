@@ -1,5 +1,6 @@
 package com.example.ra.Service.Imp;
 
+import com.example.ra.CustomException;
 import com.example.ra.Service.IOrderService;
 import com.example.ra.model.entity.Orders;
 import com.example.ra.model.enums.ProductStatus;
@@ -27,8 +28,8 @@ public class OrderServiceImp implements IOrderService {
     }
 
     @Override
-    public Orders findById(Long id) {
-        return null;
+    public Orders findById(Long id) throws CustomException {
+        return orderRepository.findById(id).orElseThrow(()->new CustomException("No orders found By this ID"));
     }
 
     @Override
@@ -39,5 +40,12 @@ public class OrderServiceImp implements IOrderService {
     @Override
     public List<Orders> findByProductStatus(ProductStatus status) {
         return orderRepository.findByStatus(status);
+    }
+
+    @Override
+    public Orders updateStatus(Long orderId, ProductStatus status) throws CustomException {
+        Orders orders=findById(orderId);
+        orders.setStatus(status);
+        return save(orders);
     }
 }
