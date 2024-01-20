@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 public class CommonService {
     @Autowired
     private UserRepository userRepository;
+
+
     public User findUserIdInContext(){
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();

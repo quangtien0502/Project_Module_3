@@ -2,6 +2,7 @@ package com.example.ra.Service.Imp;
 
 import com.example.ra.Service.CommonService;
 import com.example.ra.Service.IShoppingCartService;
+import com.example.ra.Service.IUserService;
 import com.example.ra.model.dto.Request.ShoppingCart.ShoppingCartRequest;
 import com.example.ra.model.entity.Product;
 import com.example.ra.model.entity.ShoppingCart;
@@ -9,9 +10,11 @@ import com.example.ra.model.entity.User;
 import com.example.ra.repository.ProductRepository;
 import com.example.ra.repository.ShoppingCartRepository;
 import com.example.ra.repository.UserRepository;
+import com.example.ra.security.user_principle.UserPrinciple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -24,7 +27,7 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
     private ShoppingCartRepository shoppingCartRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private IUserService userService;
 
     @Autowired
     private ProductRepository productRepository;
@@ -35,7 +38,8 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
 
     @Override
     public Page<ShoppingCart> getAll(Pageable pageable) {
-        return null;
+        User user =userService.findUserById(commonService.findUserIdInContext().getId());
+        return shoppingCartRepository.findByUser(user,pageable);
     }
 
     @Override

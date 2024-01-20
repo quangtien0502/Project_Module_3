@@ -1,19 +1,19 @@
 package com.example.ra.controller.admin;
 
+import com.example.ra.CustomException;
 import com.example.ra.Mapper;
 import com.example.ra.Service.CommonService;
 import com.example.ra.Service.Imp.OrderServiceImp;
+import com.example.ra.model.dto.Response.OrderDetailResponse;
 import com.example.ra.model.dto.Response.OrderResponse;
+import com.example.ra.model.entity.OrderDetail;
 import com.example.ra.model.entity.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,5 +40,12 @@ public class OrdersController {
 
         List<OrderResponse> orderResponseList=ordersList.stream().map((item)->mapper.orderToOrderResponse(item)).toList();
         return new ResponseEntity<>(orderResponseList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{orderId}")
+    public ResponseEntity<?> getOrderDetail(@PathVariable Long orderId) throws CustomException {
+        Orders orders=orderServiceImp.findById(orderId);
+        List<OrderDetailResponse> orderDetailResponseList=mapper.orderToOrderDetailResponse(orders);
+        return new ResponseEntity<>(orderDetailResponseList,HttpStatus.OK);
     }
 }
