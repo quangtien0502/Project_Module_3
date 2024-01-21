@@ -1,6 +1,6 @@
 package com.example.ra.model.entity;
 
-import com.example.ra.model.enums.ProductStatus;
+import com.example.ra.model.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,7 +27,7 @@ public class Orders {
     //Todo: Ask teacher whether this is acceptable ? Decimal (10,2) but this doesn't show the precision => Nearly Done
     private Double totalPrice;
     @Enumerated(EnumType.STRING)
-    private ProductStatus status;
+    private OrderStatus status;
     private String note;
     private String receiveName;
     private String receiveAddress;

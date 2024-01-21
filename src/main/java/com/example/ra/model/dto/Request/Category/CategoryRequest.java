@@ -17,5 +17,4 @@ public class CategoryRequest {
     @Column(nullable = false,unique = true)
     private String categoryName;
     private String description;
-    private Boolean status;
 }

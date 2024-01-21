@@ -1,6 +1,6 @@
 package com.example.ra.model.enums;
 
-public enum ProductStatus {
+public enum OrderStatus {
     WAITING,
     CONFIRM,
     DELIVERY,

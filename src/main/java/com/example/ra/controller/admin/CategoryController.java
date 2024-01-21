@@ -43,8 +43,22 @@ public class CategoryController {
         Category category=Category.builder()
                 .categoryName(categoryRequest.getCategoryName())
                 .description(categoryRequest.getDescription())
-                .status(categoryRequest.getStatus())
                 .build();
         return new ResponseEntity<>(categoryService.save(category),HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<?> update(@PathVariable Long categoryId,@RequestBody CategoryRequest categoryRequest) throws CustomException {
+        Category category=categoryService.findById(categoryId);
+        category.setCategoryName(categoryRequest.getCategoryName());
+        category.setDescription(categoryRequest.getDescription());
+        return new ResponseEntity<>(categoryService.save(category),HttpStatus.OK);
+    }
+
+    @PutMapping("/delete/{categoryId}")
+    public ResponseEntity<?> delete(@PathVariable Long categoryId) throws CustomException {
+        Category category=categoryService.findById(categoryId);
+        category.setStatus(false);
+        return new ResponseEntity<>(categoryService.save(category),HttpStatus.OK);
     }
 }

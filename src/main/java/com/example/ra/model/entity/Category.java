@@ -21,7 +21,8 @@ public class Category {
     @Column(nullable = false,unique = true)
     private String categoryName;
     private String description;
-    private Boolean status;
+    @Builder.Default
+    private Boolean status=true;
     @OneToMany(mappedBy = "category")
     @JsonIgnore
     private List<Product> listProducts;

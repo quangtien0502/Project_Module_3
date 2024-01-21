@@ -4,7 +4,7 @@ import com.example.ra.Service.CommonService;
 import com.example.ra.Service.IShoppingCartService;
 import com.example.ra.Service.IUserService;
 import com.example.ra.model.entity.*;
-import com.example.ra.model.enums.ProductStatus;
+import com.example.ra.model.enums.OrderStatus;
 import com.example.ra.repository.OrderDetailRepository;
 import com.example.ra.repository.OrderRepository;
 import com.example.ra.repository.ShoppingCartRepository;
@@ -80,7 +80,7 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
                 .receiveAddress(address.getFullAddress())
                 .receivePhone(address.getPhone())
                 .receiveName(user.getFullName())
-                .status(ProductStatus.CONFIRM)
+                .status(OrderStatus.CONFIRM)
                 .totalPrice(totalPrice)
                 .user(user)
                 .build();

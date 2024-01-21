@@ -2,8 +2,7 @@ package com.example.ra.Service;
 
 import com.example.ra.CustomException;
 import com.example.ra.model.entity.Orders;
-import com.example.ra.model.enums.ProductStatus;
-import org.hibernate.query.Order;
+import com.example.ra.model.enums.OrderStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,9 +14,9 @@ public interface IOrderService {
     Orders findById(Long id) throws CustomException;
     void deleteById(Long id);
 
-    List<Orders> findByProductStatus(ProductStatus status);
+    List<Orders> findByProductStatus(OrderStatus status);
 
-    Orders updateStatus(Long orderId,ProductStatus status) throws CustomException;
+    Orders updateStatus(Long orderId, OrderStatus status) throws CustomException;
 
     Orders findBySerialNumber (String serialNumber);
 

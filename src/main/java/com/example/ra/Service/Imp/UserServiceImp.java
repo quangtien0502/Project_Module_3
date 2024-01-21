@@ -1,19 +1,16 @@
 package com.example.ra.Service.Imp;
 
 import com.example.ra.CustomException;
-import com.example.ra.Service.CommonService;
 import com.example.ra.Service.IRoleService;
 import com.example.ra.Service.IUserService;
 import com.example.ra.model.dto.Request.User.UpdatePassWord;
 import com.example.ra.model.dto.Request.User.UserLogin;
 import com.example.ra.model.dto.Request.User.UserRegister;
-import com.example.ra.model.dto.Request.User.UserUpdateRequest;
 import com.example.ra.model.dto.Response.UserResponse;
-import com.example.ra.model.entity.Address;
 import com.example.ra.model.entity.Orders;
 import com.example.ra.model.entity.Role;
 import com.example.ra.model.entity.User;
-import com.example.ra.model.enums.ProductStatus;
+import com.example.ra.model.enums.OrderStatus;
 import com.example.ra.repository.OrderRepository;
 import com.example.ra.repository.UserRepository;
 import com.example.ra.security.jwt.JwtProvider;
@@ -29,7 +26,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -115,8 +111,8 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public List<Orders> orderedHistory(ProductStatus productStatus) {
-        return orderRepository.findAllByStatusIs(productStatus);
+    public List<Orders> orderedHistory(OrderStatus orderStatus) {
+        return orderRepository.findAllByStatusIs(orderStatus);
     }
 
     @Override

@@ -16,4 +16,6 @@ public interface IProductService {
     List<Product> findByNameOrDescription(String keyword);
 
     Page<Product> getAllEnable(Pageable pageable);
+
+    List<Product> bestSeller();
 }

@@ -1,7 +1,6 @@
 package com.example.ra.model.dto.Response;
 
-import com.example.ra.model.entity.OrderDetail;
-import com.example.ra.model.enums.ProductStatus;
+import com.example.ra.model.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,10 +15,10 @@ import java.util.List;
 @Builder
 public class OrderResponse {
     private Long id;
-    private Long serialNumber;
+    private String serialNumber;
     private String userFullName;
     private Double totalPrice;
-    private ProductStatus status;
+    private OrderStatus status;
     private String note;
     private String receiveName;
     private String receiveAddress;
