@@ -9,11 +9,7 @@ import com.example.ra.repository.OrderDetailRepository;
 import com.example.ra.repository.OrderRepository;
 import com.example.ra.repository.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

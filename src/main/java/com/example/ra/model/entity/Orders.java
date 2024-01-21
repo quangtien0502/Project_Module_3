@@ -19,7 +19,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long serialNumber;
+    private String serialNumber;
     //Todo: Foreign Key: User Id(done)
     @ManyToOne
     @JoinColumn(name = "user_id")

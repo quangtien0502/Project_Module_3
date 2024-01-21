@@ -6,7 +6,9 @@ import com.example.ra.model.dto.Request.User.UserLogin;
 import com.example.ra.model.dto.Request.User.UserRegister;
 import com.example.ra.model.dto.Request.User.UserUpdateRequest;
 import com.example.ra.model.dto.Response.UserResponse;
+import com.example.ra.model.entity.Orders;
 import com.example.ra.model.entity.User;
+import com.example.ra.model.enums.ProductStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -27,7 +29,7 @@ public interface IUserService {
 
     List<User> findUserByFullName(String keyword);
 
-
+    List<Orders> orderedHistory(ProductStatus productStatus);
 
     String changeUserStatus(Long userId) throws CustomException;
 }

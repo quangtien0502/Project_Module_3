@@ -10,8 +10,11 @@ import com.example.ra.model.dto.Request.User.UserRegister;
 import com.example.ra.model.dto.Request.User.UserUpdateRequest;
 import com.example.ra.model.dto.Response.UserResponse;
 import com.example.ra.model.entity.Address;
+import com.example.ra.model.entity.Orders;
 import com.example.ra.model.entity.Role;
 import com.example.ra.model.entity.User;
+import com.example.ra.model.enums.ProductStatus;
+import com.example.ra.repository.OrderRepository;
 import com.example.ra.repository.UserRepository;
 import com.example.ra.security.jwt.JwtProvider;
 import com.example.ra.security.user_principle.UserPrinciple;
@@ -50,7 +53,7 @@ public class UserServiceImp implements IUserService {
     private JwtProvider jwtProvider;
 
     @Autowired
-    private CommonService commonService;
+    private OrderRepository orderRepository;
 
     @Override
     public UserResponse handleLogin(UserLogin userLogin) {
@@ -109,6 +112,11 @@ public class UserServiceImp implements IUserService {
     @Override
     public List<User> findUserByFullName(String keyword) {
         return userRepository.findAllByFullNameContaining(keyword);
+    }
+
+    @Override
+    public List<Orders> orderedHistory(ProductStatus productStatus) {
+        return orderRepository.findAllByStatusIs(productStatus);
     }
 
     @Override

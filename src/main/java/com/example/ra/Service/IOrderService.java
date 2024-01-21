@@ -19,4 +19,8 @@ public interface IOrderService {
 
     Orders updateStatus(Long orderId,ProductStatus status) throws CustomException;
 
+    Orders findBySerialNumber (String serialNumber);
+
+    Orders cancelOrder(Orders orders);
+
 }

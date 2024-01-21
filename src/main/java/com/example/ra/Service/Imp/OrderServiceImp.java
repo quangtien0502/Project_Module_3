@@ -24,7 +24,7 @@ public class OrderServiceImp implements IOrderService {
 
     @Override
     public Orders save(Orders orders) {
-        return null;
+        return orderRepository.save(orders);
     }
 
     @Override
@@ -48,4 +48,19 @@ public class OrderServiceImp implements IOrderService {
         orders.setStatus(status);
         return save(orders);
     }
+
+    @Override
+    public Orders findBySerialNumber(String serialNumber) {
+        return orderRepository.findOrdersBySerialNumber(serialNumber);
+    }
+
+    @Override
+    public Orders cancelOrder(Orders orders) {
+        if(orders.getStatus().equals(ProductStatus.WAITING)){
+            orders.setStatus(ProductStatus.CANCEL);
+        }
+        return save(orders);
+    }
+
+
 }

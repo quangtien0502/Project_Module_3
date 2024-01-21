@@ -23,6 +23,8 @@ public class ProductServiceImp implements IProductService {
         return productRepository.findAll(pageable);
     }
 
+
+
     @Override
     public Product save(Product productRequest) {
         if (productRequest.getId() !=null){
@@ -44,5 +46,15 @@ public class ProductServiceImp implements IProductService {
         Product product=findById(id);
         product.setStatus(!product.getStatus());
         save(product);
+    }
+
+    @Override
+    public List<Product> findByNameOrDescription(String keyword) {
+        return productRepository.findAllByProductNameContainingOrDescriptionContaining(keyword,keyword);
+    }
+
+    @Override
+    public Page<Product> getAllEnable(Pageable pageable) {
+        return productRepository.findAllByStatus(true,pageable);
     }
 }

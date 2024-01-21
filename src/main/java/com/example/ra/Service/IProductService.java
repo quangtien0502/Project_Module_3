@@ -12,4 +12,8 @@ public interface IProductService {
     Product save(Product productRequest);
     Product findById(Long id);
     void deleteById(Long id);
+
+    List<Product> findByNameOrDescription(String keyword);
+
+    Page<Product> getAllEnable(Pageable pageable);
 }
