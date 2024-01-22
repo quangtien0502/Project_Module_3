@@ -32,8 +32,5 @@ public class ShoppingCart {
     private Product product;
 
 
-    @NotEmpty(message = "quantity is empty")
-    @NotBlank(message = "quantity is blank")
-    @Pattern(regexp = "\\d+", message = "quantity must be a numeric value")
     private Integer quantity;
 }

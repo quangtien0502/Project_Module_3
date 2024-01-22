@@ -17,10 +17,7 @@ import java.util.Set;
 @Data
 public class ShoppingCartRequest {
     @NotNull(message = "productId is null")
-    @Pattern(regexp = "\\d+", message = "ID must be a numeric value")
     private Long productId;
-    @NotEmpty(message = "quantity is empty")
-    @NotBlank(message = "quantity is blank")
-    @Pattern(regexp = "\\d+", message = "quantity must be a numeric value")
+    @NotNull(message = "Order Quantity is null")
     private Integer orderQuantity;
 }

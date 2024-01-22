@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface IAddressService {
-    List<Address> getAll();
+    List<Address> getAll() throws CustomException;
     Address save(Address address);
     Address findById(Long id) throws CustomException;
     void deleteById(Long id);

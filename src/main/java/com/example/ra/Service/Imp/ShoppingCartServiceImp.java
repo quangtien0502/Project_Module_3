@@ -31,6 +31,7 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
     @Autowired
     private OrderServiceImp orderServiceImp;
 
+
     @Override
     public List<ShoppingCart> getAll() throws CustomException {
         User user =userService.findUserById(commonService.findUserIdInContext().getId());
@@ -50,8 +51,8 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
     }
 
     @Override
-    public ShoppingCart findById(Integer id) {
-        return shoppingCartRepository.findById(id).orElseThrow(() -> new RuntimeException("No Shopping Cart found"));
+    public ShoppingCart findById(Integer id) throws CustomException {
+        return shoppingCartRepository.findById(id).orElseThrow(() -> new CustomException("No Shopping Cart found"));
     }
 
 
@@ -71,6 +72,9 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
         User user=userService.findUserById(commonService.findUserIdInContext().getId());
         //Todo: Create this list order detail => What to pass in the orders of orderDetailList: calculate order quantity,what's unit price and name?
         List<ShoppingCart> shoppingCartList=shoppingCartRepository.findByUser(user);
+        if(shoppingCartList.isEmpty()){
+            throw new CustomException("There are no product found in your shopping cart");
+        }
         double totalPrice=0.00;
         for (ShoppingCart shoppingCart : shoppingCartList) {
             totalPrice = totalPrice + shoppingCart.getQuantity() * shoppingCart.getProduct().getUnitPrice();
@@ -93,7 +97,10 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
                 .product(item.getProduct())
                 .build()).toList();
         List<OrderDetail> orderDetailListNew=orderDetailList.stream().map((item)->orderDetailRepository.save(item)).toList();
-
+        for (ShoppingCart shoppingCart :
+                shoppingCartList) {
+            shoppingCartRepository.deleteById(shoppingCart.getId());
+        }
         return orderServiceImp.findById(ordersNew.getId());
     }
 }
