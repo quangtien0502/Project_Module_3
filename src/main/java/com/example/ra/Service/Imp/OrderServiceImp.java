@@ -3,6 +3,7 @@ package com.example.ra.Service.Imp;
 import com.example.ra.CustomException;
 import com.example.ra.Service.IOrderService;
 import com.example.ra.model.entity.Orders;
+import com.example.ra.model.entity.User;
 import com.example.ra.model.enums.OrderStatus;
 import com.example.ra.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,11 +56,18 @@ public class OrderServiceImp implements IOrderService {
     }
 
     @Override
-    public Orders cancelOrder(Orders orders) {
+    public Orders cancelOrder(Orders orders) throws CustomException {
         if(orders.getStatus().equals(OrderStatus.WAITING)){
             orders.setStatus(OrderStatus.CANCEL);
+        }else {
+            throw new CustomException("This order isn't waiting");
         }
         return save(orders);
+    }
+
+    @Override
+    public List<Orders> findByUser(User user) {
+        return orderRepository.findAllByUser(user);
     }
 
 

@@ -2,6 +2,7 @@ package com.example.ra.Service;
 
 import com.example.ra.CustomException;
 import com.example.ra.model.entity.Orders;
+import com.example.ra.model.entity.User;
 import com.example.ra.model.enums.OrderStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,8 @@ public interface IOrderService {
 
     Orders findBySerialNumber (String serialNumber);
 
-    Orders cancelOrder(Orders orders);
+    Orders cancelOrder(Orders orders) throws CustomException;
+
+    List<Orders> findByUser(User user);
 
 }

@@ -19,9 +19,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String fullName;
+    private String email;
     @Column(unique = true)
     private String userName;
     private String password;
+    private String phone;
     private Boolean status;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
