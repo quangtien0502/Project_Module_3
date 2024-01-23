@@ -1,5 +1,6 @@
 package com.example.ra.controller.auth;
 
+import com.example.ra.Mapper;
 import com.example.ra.Service.IUserService;
 import com.example.ra.model.dto.Request.User.UserLogin;
 import com.example.ra.model.dto.Request.User.UserRegister;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/v1/auth")
+@RequestMapping("/v1/permit/auth")
 public class AuthController {
     @Autowired
     private IUserService iUserService;

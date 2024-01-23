@@ -3,10 +3,7 @@ package com.example.ra;
 import com.example.ra.model.dto.Response.OrderDetailResponse;
 import com.example.ra.model.dto.Response.OrderResponse;
 import com.example.ra.model.dto.Response.UserResponse;
-import com.example.ra.model.entity.OrderDetail;
-import com.example.ra.model.entity.Orders;
-import com.example.ra.model.entity.Role;
-import com.example.ra.model.entity.User;
+import com.example.ra.model.entity.*;
 import com.example.ra.repository.OrderDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +45,7 @@ public class Mapper {
     }
 
     public UserResponse userToUserResponse(User user){
-        return new UserResponse(user.getId(),null, user.getFullName(), user.getUserName(),user.getStatus(),user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()));
+        return new UserResponse(user.getId(),null, user.getFullName(), user.getUserName(),user.getStatus(),user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()),user.getListAddress().stream().map(Address::getFullAddress).toList(),user.getEmail());
     }
 
 }

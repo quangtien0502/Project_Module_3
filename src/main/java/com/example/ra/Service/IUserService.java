@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUserService {
     UserResponse handleLogin(UserLogin userLogin);
@@ -27,6 +28,8 @@ public interface IUserService {
     Page<User> getAll(Pageable pageable);
 
     List<User> findUserByFullName(String keyword);
+
+    User findByUserName(String userName) throws CustomException;
 
     List<Orders> orderedHistory(OrderStatus orderStatus);
 

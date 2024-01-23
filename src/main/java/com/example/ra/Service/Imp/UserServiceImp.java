@@ -7,6 +7,7 @@ import com.example.ra.model.dto.Request.User.UpdatePassWord;
 import com.example.ra.model.dto.Request.User.UserLogin;
 import com.example.ra.model.dto.Request.User.UserRegister;
 import com.example.ra.model.dto.Response.UserResponse;
+import com.example.ra.model.entity.Address;
 import com.example.ra.model.entity.Orders;
 import com.example.ra.model.entity.Role;
 import com.example.ra.model.entity.User;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -67,6 +69,8 @@ public class UserServiceImp implements IUserService {
                 .status(userPrinciple.getUser().getStatus())
                 .id(userPrinciple.getUser().getId()).accessToken(token)
                 .roles(userPrinciple.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet()))
+                .email(userPrinciple.getUser().getEmail())
+                .addresses(userPrinciple.getUser().getListAddress().stream().map(Address::getFullAddress).toList())
                 .build();
 
     }
@@ -108,6 +112,11 @@ public class UserServiceImp implements IUserService {
     @Override
     public List<User> findUserByFullName(String keyword) {
         return userRepository.findAllByFullNameContaining(keyword);
+    }
+
+    @Override
+    public User findByUserName(String userName) throws CustomException {
+        return userRepository.findByUserName(userName).orElseThrow(()->new CustomException("No User found for user name like this"));
     }
 
     @Override

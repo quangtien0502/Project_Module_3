@@ -65,13 +65,13 @@ public class ShoppingCartController {
     @DeleteMapping("/{shoppingCartId}")
     public ResponseEntity<?> delete(@PathVariable Integer shoppingCartId){
         shoppingCartService.deleteOneProductById(shoppingCartId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Success",HttpStatus.OK);
     }
 
-    @DeleteMapping()
+    @DeleteMapping("")
     public ResponseEntity<?> deleteAllShoppingCart() throws CustomException {
         shoppingCartService.deleteAllProductInShoppingCartOfUser();
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Success",HttpStatus.OK);
     }
 
     @PostMapping("/checkout")

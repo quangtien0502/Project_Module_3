@@ -29,7 +29,7 @@ public class AddressServiceImp implements IAddressService {
 
     @Override
     public Address save(Address addressRequest) {
-        return new Address(addressRequest.getId(),addressRequest.getUser(),addressRequest.getFullAddress(), addressRequest.getPhone(), addressRequest.getReceiveName());
+        return addressRepository.save(new Address(addressRequest.getId(),addressRequest.getUser(),addressRequest.getFullAddress(), addressRequest.getPhone(), addressRequest.getReceiveName()));
     }
 
     @Override

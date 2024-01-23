@@ -45,7 +45,7 @@ public class HistoryController {
        return new ResponseEntity<>(mapper.orderToOrderResponse(orders),HttpStatus.OK);
    }
 
-    @GetMapping("/{orderStatus}")
+    @GetMapping("/status/{orderStatus}")
     public ResponseEntity<?> getByStatus(@PathVariable String orderStatus) throws CustomException {
         OrderStatus status=commonService.convertToOrderStatus(orderStatus);
         List<Orders> ordersList=orderService.findByProductStatus(status);

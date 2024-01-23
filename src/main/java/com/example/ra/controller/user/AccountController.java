@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/v1/user/users")
-public class UserControllerForUser {
+@RequestMapping("/v1/user/account")
+public class AccountController {
     @Autowired
     private IUserService userService;
 
@@ -46,6 +46,7 @@ public class UserControllerForUser {
         String addressName=userUpdateRequest.getAddress();
         Address address=new Address(null,userNew,addressName,userUpdateRequest.getPhone(),userUpdateRequest.getFullName());
         addressService.save(address);
+        userNew = userService.findByUserName(user.getUserName());
         return new ResponseEntity<>(mapper.userToUserResponse(userNew),HttpStatus.OK);
     }
 

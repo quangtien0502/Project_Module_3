@@ -58,9 +58,9 @@ public class CategoryController {
     @PutMapping("/delete/{categoryId}")
     public ResponseEntity<?> delete(@PathVariable Long categoryId) throws CustomException {
         Category category=categoryService.findById(categoryId);
-        if(!category.getListProducts().isEmpty()){
-            throw new CustomException("This category already contain products, can not delete");
-        }
+//        if(!category.getListProducts().isEmpty()){
+//            throw new CustomException("This category already contain products, can not delete");
+//        }
         category.setStatus(false);
         return new ResponseEntity<>(categoryService.save(category),HttpStatus.OK);
     }

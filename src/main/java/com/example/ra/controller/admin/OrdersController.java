@@ -48,7 +48,7 @@ public class OrdersController {
 
     }
 
-    @GetMapping("/{orderStatus}")
+    @GetMapping("/status/{orderStatus}")
     public ResponseEntity<?> getOrderByStatus(@PathVariable String orderStatus) throws CustomException {
         OrderStatus status=commonService.convertToOrderStatus(orderStatus);
         List<Orders> ordersList = orderService.findByProductStatus(status);
@@ -56,7 +56,7 @@ public class OrdersController {
         return new ResponseEntity<>(orderResponseList,HttpStatus.OK);
     }
 
-    @GetMapping("/{orderId}/status")
+    @PutMapping("/{orderId}/status")
     public ResponseEntity<?> changeOrderStatus(@PathVariable Long orderId,@RequestBody String orderStatus) throws CustomException {
         OrderStatus orderStatusConvert=commonService.convertToOrderStatus(orderStatus);
         Orders orders=orderService.updateStatus(orderId,orderStatusConvert);

@@ -64,7 +64,8 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
     @Override
     public void deleteAllProductInShoppingCartOfUser() throws CustomException {
         User user=userService.findUserById(commonService.findUserIdInContext().getId());
-        shoppingCartRepository.deleteAllByUser(user);
+        List<ShoppingCart> shoppingCartList=shoppingCartRepository.findByUser(user);
+        shoppingCartRepository.deleteAll(shoppingCartList);
     }
 
     @Override
@@ -96,7 +97,7 @@ public class ShoppingCartServiceImp implements IShoppingCartService {
                 .name(item.getProduct().getProductName())
                 .product(item.getProduct())
                 .build()).toList();
-        List<OrderDetail> orderDetailListNew=orderDetailList.stream().map((item)->orderDetailRepository.save(item)).toList();
+        orderDetailList.stream().map((item)->orderDetailRepository.save(item)).toList();
         for (ShoppingCart shoppingCart :
                 shoppingCartList) {
             shoppingCartRepository.deleteById(shoppingCart.getId());
